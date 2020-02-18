@@ -1,5 +1,7 @@
 package com.aaba.chandummyandroidx.ui.bottommenu
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.aaba.chandummyandroidx.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.fragment_bottom_menu.*
 
 class BottomMenuFragment : Fragment() {
 
@@ -21,5 +25,59 @@ class BottomMenuFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_bottom_menu, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
         return root
+    }
+
+    private var customPeekHeight = 0
+    private var enableHideOnSwipeDown = true
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        modalContainer.setOnClickListener {
+            BottomSheetBehavior.from(container).apply {
+                state = BottomSheetBehavior.STATE_COLLAPSED
+            }
+        }
+        BottomSheetBehavior.from(container).apply {
+            peekHeight = customPeekHeight
+            isHideable = enableHideOnSwipeDown
+            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    onSlide(slideOffset)
+                }
+
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    onStateChanged(newState)
+                }
+            })
+        }
+        //setContainerView()
+        bottomSheetOpenAnimation(view)
+    }
+
+    var openState = BottomSheetBehavior.STATE_EXPANDED
+    private fun bottomSheetOpenAnimation(view: View) {
+        view.animate()
+            .setDuration(10)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    container?.let {
+                        BottomSheetBehavior.from(it).apply {
+                            state = openState
+                        }
+                    }
+                }
+            }).start()
+    }
+
+    private fun onSlide(slideOffset: Float) {
+        modalContainer?.alpha = slideOffset
+    }
+
+    private fun onStateChanged(newState: Int) {
+        if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+            requireActivity().onBackPressed()
+            //onCollapsed()
+        } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+            modalContainer?.alpha = 1.0f
+        }
     }
 }
