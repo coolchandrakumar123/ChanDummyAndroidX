@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.aaba.chandummyandroidx.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_bottom_menu.*
@@ -22,9 +19,7 @@ class BottomMenuFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_bottom_menu, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        return root
+        return inflater.inflate(R.layout.fragment_bottom_menu, container, false)
     }
 
     private var customPeekHeight = 0
@@ -51,6 +46,7 @@ class BottomMenuFragment : Fragment() {
         }
         //setContainerView()
         bottomSheetOpenAnimation(view)
+        menu_viewpager.adapter = BottomMenuPageAdapter(childFragmentManager, lifecycle)
     }
 
     var openState = BottomSheetBehavior.STATE_EXPANDED
