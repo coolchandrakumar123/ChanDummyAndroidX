@@ -15,7 +15,10 @@ class BottomMenuPageAdapter(fm: FragmentManager, lifeCycle: Lifecycle, val count
     override fun createFragment(position: Int): Fragment {
         return if(isSubMenuEnable && position == 1) {
             ViewPagerPageFragment.getInstance("Test")
-        } else {
+        } else if(isSubMenuEnable && position == 2) {
+            NestedScrollPageFragment.getInstance("Test")
+        }
+        else {
             BottomPageFragment.getInstance("$position Fragment")
         }
     }
