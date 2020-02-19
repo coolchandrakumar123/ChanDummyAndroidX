@@ -18,7 +18,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.bottomsheet.MultiNestedScrollBottomBehaviour">
+        app:layout_behavior="com.google.android.material.bottomsheet.MultiScrollBottomSheetBehaviour">
 
         <ImageView
             android:id="@+id/indicator"

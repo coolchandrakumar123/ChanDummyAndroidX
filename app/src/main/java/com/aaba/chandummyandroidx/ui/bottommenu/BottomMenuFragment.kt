@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.aaba.chandummyandroidx.R
-import com.google.android.material.bottomsheet.CustomBottomSheetBehavior
-import com.google.android.material.bottomsheet.MultiNestedScrollBottomBehaviour
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.MultiScrollBottomSheetBehaviour
 import kotlinx.android.synthetic.main.fragment_bottom_menu.*
 
 class BottomMenuFragment : Fragment() {
@@ -29,14 +29,14 @@ class BottomMenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         modalContainer.setOnClickListener {
-            MultiNestedScrollBottomBehaviour.from(container)?.apply {
-                state = CustomBottomSheetBehavior.STATE_COLLAPSED
+            MultiScrollBottomSheetBehaviour.from(container)?.apply {
+                state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
-        MultiNestedScrollBottomBehaviour.from(container)?.apply {
+        MultiScrollBottomSheetBehaviour.from(container)?.apply {
             peekHeight = customPeekHeight
             isHideable = enableHideOnSwipeDown
-            addBottomSheetCallback(object : CustomBottomSheetBehavior.BottomSheetCallback() {
+            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     onSlide(slideOffset)
                 }
@@ -52,25 +52,25 @@ class BottomMenuFragment : Fragment() {
         menu_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 menu_viewpager.post {
-                    MultiNestedScrollBottomBehaviour.from(container)?.updateScrollingChild()
+                    MultiScrollBottomSheetBehaviour.from(container)?.updateScrollingChild()
                 }
             }
         })
     }
 
-    var openState = CustomBottomSheetBehavior.STATE_EXPANDED
+    var openState = BottomSheetBehavior.STATE_EXPANDED
     private fun bottomSheetOpenAnimation(view: View) {
         view.animate()
             .setDuration(10)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     container?.let {
-                        MultiNestedScrollBottomBehaviour.from(it)?.apply {
+                        MultiScrollBottomSheetBehaviour.from(it)?.apply {
                             state = openState
                         }
                     }
                     menu_viewpager.post {
-                        MultiNestedScrollBottomBehaviour.from(container)?.updateScrollingChild()
+                        MultiScrollBottomSheetBehaviour.from(container)?.updateScrollingChild()
                     }
                 }
             }).start()
@@ -81,10 +81,10 @@ class BottomMenuFragment : Fragment() {
     }
 
     private fun onStateChanged(newState: Int) {
-        if (newState == CustomBottomSheetBehavior.STATE_COLLAPSED) {
+        if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
             requireActivity().onBackPressed()
             //onCollapsed()
-        } else if (newState == CustomBottomSheetBehavior.STATE_EXPANDED) {
+        } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
             modalContainer?.alpha = 1.0f
         }
     }

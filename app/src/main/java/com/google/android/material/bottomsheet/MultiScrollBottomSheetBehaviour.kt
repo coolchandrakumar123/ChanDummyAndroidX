@@ -2,6 +2,7 @@ package com.google.android.material.bottomsheet
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,26 +27,23 @@ class MultiScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
 
     override fun findScrollingChild(view: View): View? {
         if (ViewCompat.isNestedScrollingEnabled(view)) {
+            Log.d("ChanLog", "scrollingEnabled: ${view}");
             return view
         }
 
         if (view is ViewPager2) {
-            val viewPager = view
-            val currentViewPagerChild = viewPager.getChildAt(viewPager.currentItem)?:return null
+            Log.d("ChanLog", "currentItem: ${view.currentItem}, item: ${view.getChildAt(view.currentItem)}");
+            val currentViewPagerChild = view.getChildAt(view.currentItem)?:return null
             val scrollingChild = findScrollingChild(currentViewPagerChild)
             if (scrollingChild != null) {
                 return scrollingChild
             }
         } else if (view is ViewGroup) {
-            val group = view
-            var i = 0
-            val count = group.childCount
-            while (i < count) {
-                val scrollingChild = findScrollingChild(group.getChildAt(i))
+            for (i in 0 until view.childCount) {
+                val scrollingChild = findScrollingChild(view.getChildAt(i))
                 if (scrollingChild != null) {
                     return scrollingChild
                 }
-                i++
             }
         }
         return null

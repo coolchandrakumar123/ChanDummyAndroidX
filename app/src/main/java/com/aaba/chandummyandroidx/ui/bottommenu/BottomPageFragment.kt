@@ -42,7 +42,7 @@ class BottomPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val data: ArrayList<String> = arrayListOf()
-        for(i in 0..25) {
+        for(i in 0..50) {
             data.add("$i Value")
         }
         bottomRecyclerAdapter.setList(data)
