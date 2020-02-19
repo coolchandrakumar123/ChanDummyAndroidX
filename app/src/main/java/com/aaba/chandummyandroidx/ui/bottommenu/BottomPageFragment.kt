@@ -45,9 +45,7 @@ class BottomPageFragment : Fragment() {
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     val visiblePosition = (recycler_view.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    if(visiblePosition > 2) {
-                        v.parent.requestDisallowInterceptTouchEvent(true)
-                    }
+                    v.parent.requestDisallowInterceptTouchEvent(visiblePosition > 1)
                 }
                 MotionEvent.ACTION_UP -> {
                     v.parent.requestDisallowInterceptTouchEvent(false)
