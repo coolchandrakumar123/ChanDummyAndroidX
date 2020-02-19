@@ -34,7 +34,10 @@ class BottomPageFragment : Fragment() {
         title.text =  arguments?.getString(TITLE)?:"Default"
         bottomRecyclerAdapter = BottomRecyclerAdapter()
         recycler_view.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext()).apply {
+                isSmoothScrollbarEnabled = false
+            }
+            isNestedScrollingEnabled = false
             adapter = bottomRecyclerAdapter
         }
     }

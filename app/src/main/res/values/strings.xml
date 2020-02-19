@@ -12,4 +12,7 @@
 
     <string name="home_second">Home Second</string>
     <string name="second_line">Second Line</string>
+    <string name="google_bottom_sheet_behaviour" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
+    <string name="multi_nested_scroll_bottom_behaviour" translatable="false">com.google.android.material.bottomsheet.MultiNestedScrollBottomBehaviour</string>
+    <string name="multi_scroll_bottom_sheet_behaviour" translatable="false">com.google.android.material.bottomsheet.MultiScrollBottomSheetBehaviour</string>
 </resources>

@@ -10,7 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  */
 class BottomMenuPageAdapter(fm: FragmentManager, lifeCycle: Lifecycle) : FragmentStateAdapter(fm,lifeCycle) {
 
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int = 4
 
     override fun createFragment(position: Int): Fragment = BottomPageFragment.getInstance("$position Fragment")
 }

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPagerUtils
 import androidx.viewpager2.widget.ViewPager2
 import java.lang.ref.WeakReference
 
@@ -32,12 +34,11 @@ class MultiScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
         }
 
         if (view is ViewPager2) {
-            Log.d("ChanLog", "currentItem: ${view.currentItem}, item: ${view.getChildAt(view.currentItem)}");
-            val currentViewPagerChild = view.getChildAt(view.currentItem)?:return null
-            val scrollingChild = findScrollingChild(currentViewPagerChild)
-            if (scrollingChild != null) {
-                return scrollingChild
-            }
+            //val currentView = (view.getChildAt(0) as RecyclerView).layoutManager?.getChildAt(view.currentItem)
+            val currentView = getScrollableView(view)
+            Log.d("ChanLog", "currentItem: ${view.currentItem}, item: ${currentView}");
+            //val scrollingChild = findScrollingChild(currentViewPagerChild)
+            return findScrollingChild(currentView?:return null)
         } else if (view is ViewGroup) {
             for (i in 0 until view.childCount) {
                 val scrollingChild = findScrollingChild(view.getChildAt(i))
@@ -45,6 +46,22 @@ class MultiScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
                     return scrollingChild
                 }
             }
+        }
+        return null
+    }
+
+    private fun getScrollableView(viewPager: ViewPager2): View? {
+        val currentItem: Int = viewPager.currentItem
+        val childView = ((viewPager.getChildAt(0) as RecyclerView).layoutManager?.getChildAt(currentItem) as? ViewGroup)?.getChildAt(0) as? ViewGroup ?: return null
+        for (i in 0 until childView.childCount) {
+            val child = childView.getChildAt(i)
+            if (child is RecyclerView) {
+                return child
+            }
+            /*final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) child.getLayoutParams();
+            if (!layoutParams.isDecor && currentItem == layoutParams.position) {
+                return child;
+            }*/
         }
         return null
     }
@@ -61,13 +78,13 @@ class MultiScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
          * @param view The [View] with [MultiScrollBottomSheetBehaviour].
          * @return The [MultiScrollBottomSheetBehaviour] associated with the `view`.
          */
-        fun <V : View> from(view: V): MultiScrollBottomSheetBehaviour<V>? {
+        fun <V : View> from(view: V): MultiScrollBottomSheetBehaviour<V> {
             val params = view.layoutParams
             require(params is CoordinatorLayout.LayoutParams) { "The view is not a child of CoordinatorLayout" }
             val behavior =
                 params.behavior
             require(behavior is MultiScrollBottomSheetBehaviour) { "The view is not associated with ViewPagerBottomSheetBehavior" }
-            return behavior as MultiScrollBottomSheetBehaviour<V>?
+            return behavior as MultiScrollBottomSheetBehaviour<V>
         }
     }
 }

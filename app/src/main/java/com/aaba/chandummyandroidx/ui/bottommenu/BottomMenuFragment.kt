@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.aaba.chandummyandroidx.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -28,12 +30,19 @@ class BottomMenuFragment : Fragment() {
     private var enableHideOnSwipeDown = true
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        one_button.setCurrentItem(1)
+        two_button.setCurrentItem(2)
+        three_button.setCurrentItem(3)
+        menu_viewpager.isUserInputEnabled = false
+        (menu_viewpager.getChildAt(0) as RecyclerView).isNestedScrollingEnabled = false
+
         modalContainer.setOnClickListener {
-            MultiScrollBottomSheetBehaviour.from(container)?.apply {
+            MultiScrollBottomSheetBehaviour.from(container).apply {
                 state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
-        MultiScrollBottomSheetBehaviour.from(container)?.apply {
+        MultiScrollBottomSheetBehaviour.from(container).apply {
             peekHeight = customPeekHeight
             isHideable = enableHideOnSwipeDown
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -52,10 +61,16 @@ class BottomMenuFragment : Fragment() {
         menu_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 menu_viewpager.post {
-                    MultiScrollBottomSheetBehaviour.from(container)?.updateScrollingChild()
+                    MultiScrollBottomSheetBehaviour.from(container).updateScrollingChild()
                 }
             }
         })
+    }
+
+    private fun Button.setCurrentItem(position: Int) {
+        setOnClickListener {
+            menu_viewpager.setCurrentItem(position, true)
+        }
     }
 
     var openState = BottomSheetBehavior.STATE_EXPANDED
@@ -65,12 +80,12 @@ class BottomMenuFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     container?.let {
-                        MultiScrollBottomSheetBehaviour.from(it)?.apply {
+                        MultiScrollBottomSheetBehaviour.from(it).apply {
                             state = openState
                         }
                     }
                     menu_viewpager.post {
-                        MultiScrollBottomSheetBehaviour.from(container)?.updateScrollingChild()
+                        MultiScrollBottomSheetBehaviour.from(container).updateScrollingChild()
                     }
                 }
             }).start()
