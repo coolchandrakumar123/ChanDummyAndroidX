@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.aaba.chandummyandroidx.R
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.MultiScrollBottomSheetBehaviour
+import com.google.android.material.bottomsheet.CustomBottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_bottom_menu.*
 
 class BottomMenuFragment : Fragment() {
@@ -34,18 +32,18 @@ class BottomMenuFragment : Fragment() {
         one_button.setCurrentItem(1)
         two_button.setCurrentItem(2)
         three_button.setCurrentItem(3)
-        menu_viewpager.isUserInputEnabled = false
-        (menu_viewpager.getChildAt(0) as RecyclerView).isNestedScrollingEnabled = false
+        //menu_viewpager.isUserInputEnabled = false
+        //(menu_viewpager.getChildAt(0) as RecyclerView).isNestedScrollingEnabled = false
 
         modalContainer.setOnClickListener {
-            MultiScrollBottomSheetBehaviour.from(container).apply {
-                state = BottomSheetBehavior.STATE_COLLAPSED
+            CustomBottomSheetBehavior.from(container).apply {
+                state = CustomBottomSheetBehavior.STATE_COLLAPSED
             }
         }
-        MultiScrollBottomSheetBehaviour.from(container).apply {
+        CustomBottomSheetBehavior.from(container).apply {
             peekHeight = customPeekHeight
             isHideable = enableHideOnSwipeDown
-            addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            addBottomSheetCallback(object : CustomBottomSheetBehavior.BottomSheetCallback() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     onSlide(slideOffset)
                 }
@@ -60,9 +58,9 @@ class BottomMenuFragment : Fragment() {
         menu_viewpager.adapter = BottomMenuPageAdapter(childFragmentManager, lifecycle)
         menu_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                menu_viewpager.post {
-                    MultiScrollBottomSheetBehaviour.from(container).updateScrollingChild()
-                }
+                /*menu_viewpager.post {
+                    CustomBottomSheetBehavior.from(container).updateScrollingChild()
+                }*/
             }
         })
     }
@@ -73,20 +71,20 @@ class BottomMenuFragment : Fragment() {
         }
     }
 
-    var openState = BottomSheetBehavior.STATE_EXPANDED
+    var openState = CustomBottomSheetBehavior.STATE_EXPANDED
     private fun bottomSheetOpenAnimation(view: View) {
         view.animate()
             .setDuration(10)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     container?.let {
-                        MultiScrollBottomSheetBehaviour.from(it).apply {
+                        CustomBottomSheetBehavior.from(it).apply {
                             state = openState
                         }
                     }
-                    menu_viewpager.post {
-                        MultiScrollBottomSheetBehaviour.from(container).updateScrollingChild()
-                    }
+                    /*menu_viewpager.post {
+                        CustomBottomSheetBehavior.from(container).updateScrollingChild()
+                    }*/
                 }
             }).start()
     }
@@ -96,10 +94,10 @@ class BottomMenuFragment : Fragment() {
     }
 
     private fun onStateChanged(newState: Int) {
-        if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+        if (newState == CustomBottomSheetBehavior.STATE_COLLAPSED) {
             requireActivity().onBackPressed()
             //onCollapsed()
-        } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+        } else if (newState == CustomBottomSheetBehavior.STATE_EXPANDED) {
             modalContainer?.alpha = 1.0f
         }
     }

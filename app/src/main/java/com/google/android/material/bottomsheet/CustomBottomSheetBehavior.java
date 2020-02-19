@@ -54,6 +54,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
@@ -1154,7 +1156,7 @@ public class CustomBottomSheetBehavior<V extends View> extends CoordinatorLayout
     @VisibleForTesting
     View findScrollingChild(View view) {
         /* *** Original One *** */
-        if (ViewCompat.isNestedScrollingEnabled(view)) {
+        /*if (ViewCompat.isNestedScrollingEnabled(view)) {
             return view;
         }
         if (view instanceof ViewGroup) {
@@ -1166,15 +1168,15 @@ public class CustomBottomSheetBehavior<V extends View> extends CoordinatorLayout
                 }
             }
         }
-        return null;
+        return null;*/
 
-        /*if (ViewCompat.isNestedScrollingEnabled(view)) {
+        if (ViewCompat.isNestedScrollingEnabled(view)) {
             return view;
         }
         if (view instanceof ViewPager2) {
             //return findScrollingChild(((ViewPager2) view).getFocusedChild());
             ViewPager2 viewPager = (ViewPager2) view;
-            View currentViewPagerChild = viewPager.getChildAt(viewPager.getCurrentItem());
+            View currentViewPagerChild = getCurrentView(viewPager);
             View scrollingChild = findScrollingChild(currentViewPagerChild);
             if (scrollingChild != null) {
                 return scrollingChild;
@@ -1188,7 +1190,12 @@ public class CustomBottomSheetBehavior<V extends View> extends CoordinatorLayout
                 }
             }
         }
-        return null;*/
+        return null;
+    }
+
+    private View getCurrentView(ViewPager2 viewPager) {
+        final int currentItem = viewPager.getCurrentItem();
+        return  (ViewGroup) ((ViewGroup) ((RecyclerView.LayoutManager) ((RecyclerView) viewPager.getChildAt(0)).getLayoutManager()).getChildAt(currentItem)).getChildAt(0);
     }
 
     /*public void updateScrollingChild() {

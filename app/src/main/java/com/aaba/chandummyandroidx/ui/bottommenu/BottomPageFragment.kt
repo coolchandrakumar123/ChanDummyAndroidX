@@ -2,6 +2,7 @@ package com.aaba.chandummyandroidx.ui.bottommenu
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -39,6 +40,21 @@ class BottomPageFragment : Fragment() {
             }
             isNestedScrollingEnabled = false
             adapter = bottomRecyclerAdapter
+        }
+        recycler_view.setOnTouchListener { v, event ->
+            when(event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    val visiblePosition = (recycler_view.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    if(visiblePosition > 2) {
+                        v.parent.requestDisallowInterceptTouchEvent(true)
+                    }
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.parent.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            v.onTouchEvent(event)
+            true
         }
     }
 
