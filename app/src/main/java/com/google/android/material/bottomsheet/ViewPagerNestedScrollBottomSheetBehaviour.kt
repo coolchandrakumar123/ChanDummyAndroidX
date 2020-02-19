@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference
  * Created by chandra-1765$ on 18/02/20$.
  */
 
-class MultiScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
+class ViewPagerNestedScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
 
     constructor() : super() {
 
@@ -61,18 +61,18 @@ class MultiScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
 
     companion object {
         /**
-         * A utility function to get the [MultiScrollBottomSheetBehaviour] associated with the `view`.
+         * A utility function to get the [ViewPagerNestedScrollBottomSheetBehaviour] associated with the `view`.
          *
-         * @param view The [View] with [MultiScrollBottomSheetBehaviour].
-         * @return The [MultiScrollBottomSheetBehaviour] associated with the `view`.
+         * @param view The [View] with [ViewPagerNestedScrollBottomSheetBehaviour].
+         * @return The [ViewPagerNestedScrollBottomSheetBehaviour] associated with the `view`.
          */
-        fun <V : View> from(view: V): MultiScrollBottomSheetBehaviour<V> {
+        fun <V : View> from(view: V): ViewPagerNestedScrollBottomSheetBehaviour<V> {
             val params = view.layoutParams
             require(params is CoordinatorLayout.LayoutParams) { "The view is not a child of CoordinatorLayout" }
             val behavior =
                 params.behavior
-            require(behavior is MultiScrollBottomSheetBehaviour) { "The view is not associated with ViewPagerBottomSheetBehavior" }
-            return behavior as MultiScrollBottomSheetBehaviour<V>
+            require(behavior is ViewPagerNestedScrollBottomSheetBehaviour) { "The view is not associated with ViewPagerBottomSheetBehavior" }
+            return behavior as ViewPagerNestedScrollBottomSheetBehaviour<V>
         }
     }
 }

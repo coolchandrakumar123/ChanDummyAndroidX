@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.aaba.chandummyandroidx.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.MultiScrollBottomSheetBehaviour
+import com.google.android.material.bottomsheet.ViewPagerNestedScrollBottomSheetBehaviour
 import kotlinx.android.synthetic.main.fragment_bottom_menu.*
 
 class BottomMenuFragment : Fragment() {
@@ -37,11 +37,11 @@ class BottomMenuFragment : Fragment() {
         //(menu_viewpager.getChildAt(0) as RecyclerView).isNestedScrollingEnabled = false
 
         modalContainer.setOnClickListener {
-            MultiScrollBottomSheetBehaviour.from(container).apply {
+            ViewPagerNestedScrollBottomSheetBehaviour.from(container).apply {
                 state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
-        MultiScrollBottomSheetBehaviour.from(container).apply {
+        ViewPagerNestedScrollBottomSheetBehaviour.from(container).apply {
             peekHeight = customPeekHeight
             isHideable = enableHideOnSwipeDown
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -56,7 +56,7 @@ class BottomMenuFragment : Fragment() {
         }
         //setContainerView()
         bottomSheetOpenAnimation(view)
-        menu_viewpager.adapter = BottomMenuPageAdapter(childFragmentManager, lifecycle)
+        menu_viewpager.adapter = BottomMenuPageAdapter(childFragmentManager, lifecycle, isSubMenuEnable = true)
         menu_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 /*menu_viewpager.post {
@@ -79,7 +79,7 @@ class BottomMenuFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     container?.let {
-                        MultiScrollBottomSheetBehaviour.from(it).apply {
+                        ViewPagerNestedScrollBottomSheetBehaviour.from(it).apply {
                             state = openState
                         }
                     }

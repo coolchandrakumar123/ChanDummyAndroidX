@@ -10,10 +10,12 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_bottom_menu">BottomMenu</string>
 
+    <string name="title_sub_menu">Sub Menu</string>
+
     <string name="home_second">Home Second</string>
     <string name="second_line">Second Line</string>
     <string name="google_bottom_sheet_behaviour" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
     <string name="custom_google_bottom_sheet_behaviour" translatable="false">com.google.android.material.bottomsheet.CustomBottomSheetBehavior</string>
     <string name="multi_nested_scroll_bottom_behaviour" translatable="false">com.google.android.material.bottomsheet.MultiNestedScrollBottomBehaviour</string>
-    <string name="multi_scroll_bottom_sheet_behaviour" translatable="false">com.google.android.material.bottomsheet.MultiScrollBottomSheetBehaviour</string>
+    <string name="view_pager_nested_scroll_bottom_sheet_behaviour" translatable="false">com.google.android.material.bottomsheet.ViewPagerNestedScrollBottomSheetBehaviour</string>
 </resources>
