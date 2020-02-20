@@ -59,9 +59,7 @@ class BottomMenuFragment : Fragment() {
         menu_viewpager.adapter = BottomMenuPageAdapter(childFragmentManager, lifecycle, isSubMenuEnable = true)
         menu_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                /*menu_viewpager.post {
-                    CustomBottomSheetBehavior.from(container).updateScrollingChild()
-                }*/
+                ViewPagerNestedScrollBottomSheetBehaviour.from(container).updateScrollingChild()
             }
         })
     }

@@ -4,11 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import androidx.collection.LongSparseArray
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import java.lang.ref.WeakReference
+import kotlin.reflect.full.superclasses
 
 
 /**
@@ -51,7 +54,19 @@ class ViewPagerNestedScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V
 
     private fun getCurrentView(viewPager: ViewPager2): View? {
         val currentItem = viewPager.currentItem
-        return ((viewPager.getChildAt(0) as RecyclerView).layoutManager?.getChildAt(currentItem) as? ViewGroup)?.getChildAt(0) as? ViewGroup
+        //return ((viewPager.getChildAt(0) as RecyclerView).layoutManager?.getChildAt(currentItem) as? ViewGroup)?.getChildAt(0) as? ViewGroup
+        val fragment = (viewPager.adapter as? FragmentStateAdapter)?.getItem(currentItem)
+        return fragment?.view
+    }
+
+    private fun FragmentStateAdapter.getItem(position: Int): Fragment? {
+        return this::class.superclasses.find { it == FragmentStateAdapter::class }
+            ?.java?.getDeclaredField("mFragments")
+            ?.let { field ->
+                field.isAccessible = true
+                val mFragments = field.get(this) as LongSparseArray<Fragment>
+                return@let mFragments[getItemId(position)]
+            }
     }
 
     fun updateScrollingChild() {

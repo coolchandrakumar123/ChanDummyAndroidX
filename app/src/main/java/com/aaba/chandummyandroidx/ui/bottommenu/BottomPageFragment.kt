@@ -2,7 +2,6 @@ package com.aaba.chandummyandroidx.ui.bottommenu
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -35,15 +34,15 @@ class BottomPageFragment : Fragment() {
         title.text =  arguments?.getString(TITLE)?:"Default"
         bottomRecyclerAdapter = BottomRecyclerAdapter()
         recycler_view.apply {
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                isSmoothScrollbarEnabled = false
-            }
-            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = bottomRecyclerAdapter
         }
-        recycler_view.setOnTouchListener { v, event ->
+        /*recycler_view.setOnTouchListener { v, event ->
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
+
+                }
+                MotionEvent.ACTION_MOVE -> {
                     val visiblePosition = (recycler_view.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     v.parent.requestDisallowInterceptTouchEvent(visiblePosition > 1)
                 }
@@ -53,7 +52,7 @@ class BottomPageFragment : Fragment() {
             }
             v.onTouchEvent(event)
             true
-        }
+        }*/
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

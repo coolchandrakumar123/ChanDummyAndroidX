@@ -30,7 +30,7 @@ class NestedScrollPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        nested_scroll_view.setOnTouchListener { v, event ->
+        /*nested_scroll_view.setOnTouchListener { v, event ->
             when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     v.parent.requestDisallowInterceptTouchEvent(nested_scroll_view.scrollY > 10)
@@ -41,6 +41,6 @@ class NestedScrollPageFragment : Fragment() {
             }
             v.onTouchEvent(event)
             true
-        }
+        }*/
     }
 }
