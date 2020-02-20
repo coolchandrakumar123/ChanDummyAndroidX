@@ -57,11 +57,12 @@ class BottomMenuFragment : Fragment() {
         //setContainerView()
         bottomSheetOpenAnimation(view)
         menu_viewpager.adapter = BottomMenuPageAdapter(childFragmentManager, lifecycle, isSubMenuEnable = true)
-        menu_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        ViewPagerNestedScrollPageListener.setupViewPager(menu_viewpager)
+        /*menu_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 ViewPagerNestedScrollBottomSheetBehaviour.from(container).updateScrollingChild()
             }
-        })
+        })*/
     }
 
     private fun Button.setCurrentItem(position: Int) {

@@ -33,6 +33,7 @@ class ViewPagerPageFragment : Fragment() {
         menu_viewpager.adapter = BottomMenuPageAdapter(childFragmentManager, lifecycle, count = 3)
         one_button.setCurrentItem(0)
         two_button.setCurrentItem(1)
+        ViewPagerNestedScrollPageListener.setupViewPager(menu_viewpager)
     }
 
     private fun Button.setCurrentItem(position: Int) {

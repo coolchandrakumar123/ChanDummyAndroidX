@@ -70,19 +70,19 @@
                     android:id="@+id/one_button"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:text="One"
+                    android:text="ViewPager"
                     android:textSize="20sp"/>
                 <Button
                     android:id="@+id/two_button"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:text="TWO"
+                    android:text="ScrollView"
                     android:textSize="20sp"/>
                 <Button
                     android:id="@+id/three_button"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:text="THREE"
+                    android:text="RecyclerView"
                     android:textSize="20sp"/>
             </LinearLayout>
 

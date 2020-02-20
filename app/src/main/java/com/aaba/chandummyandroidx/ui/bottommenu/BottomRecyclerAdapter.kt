@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.aaba.chandummyandroidx.R
 
@@ -33,6 +34,9 @@ class BottomRecyclerAdapter: RecyclerView.Adapter<BottomRecyclerAdapter.ItemView
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(data: String) {
             itemView.findViewById<TextView>(R.id.label).text = data
+            itemView.setOnClickListener {
+                Toast.makeText(itemView.context, "Item Clicked", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -16,6 +16,10 @@ import kotlin.reflect.full.superclasses
 
 /**
  * Created by chandra-1765$ on 18/02/20$.
+ * https://medium.com/@hanru.yeh/funny-solution-that-makes-bottomsheetdialog-support-viewpager-with-nestedscrollingchilds-bfdca72235c3
+ * https://android.googlesource.com/platform/frameworks/support/+/2b53fdcd54f2760ed7957393f9e9f2140105c9ce/design/src/android/support/design/widget/BottomSheetBehavior.java#126
+ * https://stackoverflow.com/questions/37715822/android-viewpager-with-recyclerview-works-incorrectly-inside-bottomsheet
+ * https://github.com/laenger/ViewPagerBottomSheet/commit/277571585500b8c1ed4ed444a5bd250b981c47fc
  */
 
 class ViewPagerNestedScrollBottomSheetBehaviour<V: View> : BottomSheetBehavior<V> {
