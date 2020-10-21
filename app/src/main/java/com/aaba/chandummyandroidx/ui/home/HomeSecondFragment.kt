@@ -15,6 +15,10 @@ import com.aaba.chandummyandroidx.R
 
 class HomeSecondFragment : Fragment() {
 
+    companion object {
+        const val RESULT_DATA = "RESULT_DATA"
+    }
+
     private val args: HomeSecondFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -32,7 +36,9 @@ class HomeSecondFragment : Fragment() {
                 getString(R.string.hello_home_second, args.myArg)
 
         view.findViewById<Button>(R.id.button_home_second).setOnClickListener {
-            findNavController().navigate(R.id.action_HomeSecondFragment_to_HomeFragment)
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(RESULT_DATA, Triple("ONE", "TWO", "THREE"))
+            //findNavController().navigate(R.id.action_HomeSecondFragment_to_HomeFragment)
+            requireActivity().onBackPressed()
         }
     }
 }
